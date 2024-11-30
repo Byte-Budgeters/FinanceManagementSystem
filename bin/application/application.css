@@ -1,1 +1,85 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+/* Global Styles */
+.root {
+    -fx-background-color: linear-gradient(to bottom right, #3494E6, #EC6EAD);
+}
+
+.background-rectangle {
+    -fx-fill: rgba(255, 255, 255, 0);
+    -fx-arc-width: 20;
+    -fx-arc-height: 20;
+}
+
+/* Container Styles */
+.login-container, 
+.signup-container {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);
+    -fx-padding: 30;
+}
+
+/* Input Field Styles */
+.input-field {
+    -fx-background-color: #f4f4f4;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: transparent;
+    -fx-padding: 10;
+    -fx-font-size: 14px;
+}
+
+.input-field:focused {
+    -fx-background-color: white;
+    -fx-border-color: #3494E6;
+}
+
+/* Button Styles */
+.primary-button {
+    -fx-background-color: #3494E6;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+}
+
+.primary-button:hover {
+    -fx-background-color: #2C7DCE;
+}
+
+.secondary-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #3494E6;
+    -fx-border-color: #3494E6;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8 18;
+    -fx-font-size: 14px;
+}
+
+.secondary-button:hover {
+    -fx-background-color: rgba(52, 148, 230, 0.1);
+}
+
+.forgot-password-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #777;
+    -fx-font-size: 12px;
+}
+
+.forgot-password-button:hover {
+    -fx-text-fill: #3494E6;
+}
+
+/* Label Styles */
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.error-label {
+    -fx-text-fill: #FF4136;
+    -fx-font-size: 12px;
+}

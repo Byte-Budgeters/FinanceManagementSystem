@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="application.Controller.LoginController"
+           styleClass="root">
+
+    <!-- Background Rectangle -->
+    <Rectangle fx:id="backgroundRect" 
+               styleClass="background-rectangle"
+               StackPane.alignment="CENTER"
+               width="800" height="600"/> <!-- Replace with specific dimensions -->
+
+    <!-- Login Form Centered -->
+    <StackPane alignment="CENTER">
+        <VBox alignment="CENTER" 
+              spacing="20" 
+              maxWidth="350"
+              maxHeight="450"
+              styleClass="login-container">
+
+            <Label text="Welcome Back" 
+                   styleClass="title-label"/>
+            
+            <TextField fx:id="usernameField" 
+                       promptText="Username" 
+                       styleClass="input-field"/>
+            
+            <PasswordField fx:id="passwordField" 
+                           promptText="Password" 
+                           styleClass="input-field"/>
+            
+            <Button text="Forgot Password?" 
+                    onAction="#handleForgotPasswordButton"
+                    styleClass="forgot-password-button"/>
+            
+            <VBox spacing="10" alignment="CENTER">
+                <Button text="Login" 
+                        styleClass="primary-button"
+                        onAction="#handleLoginButton"/>
+                
+                <HBox alignment="CENTER" spacing="10">
+                    <Label text="Don't have an account?"/>
+                    <Button text="Sign Up" 
+                            styleClass="secondary-button"
+                            onAction="#handleSignUpButton"/>
+                </HBox>
+            </VBox>
+            
+            <Label fx:id="errorLabel" 
+                   styleClass="error-label"/>
+        </VBox>
+    </StackPane>
+</StackPane>
