@@ -42,9 +42,28 @@ public class LoginController {
            // myMessage.setText("Login successful!");
            // openDashboard();
         	System.out.println("Sucess Login");
+        	try {
+                // Load the signup FXML
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/View/MainDashboard.fxml"));
+                Parent signupRoot = loader.load();
+
+                // Get current stage
+                Stage stage = (Stage) usernameField.getScene().getWindow();
+
+                // Apply new scene and stylesheet
+                Scene signupScene = new Scene(signupRoot);
+                signupScene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+                stage.setFullScreen(true);
+                stage.setScene(signupScene);
+                stage.setTitle("Dashboard");
+            } catch (IOException e) {
+                e.printStackTrace();
+                errorLabel.setText("Error loading signup page");
+            }
+        	
         } else {
         	System.out.println("Fail Login");
-           // myMessage.setText("Invalid email or password!");
+           errorLabel.setText("Invalid email or password!");
         }
         // Here you would typically add your authentication logic
         System.out.println("Login attempt: " + username);
@@ -63,6 +82,7 @@ public class LoginController {
             // Apply new scene and stylesheet
             Scene signupScene = new Scene(signupRoot);
             signupScene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+            stage.setFullScreen(true);
             stage.setScene(signupScene);
             stage.setTitle("Sign Up");
         } catch (IOException e) {
