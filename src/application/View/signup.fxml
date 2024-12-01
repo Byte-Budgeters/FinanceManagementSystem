@@ -32,17 +32,19 @@
         <Label text="Create Your Account" 
                styleClass="title-label"/>
         
-        <TextField fx:id="fullNameField" 
-                   promptText="Full Name" 
+        <TextField fx:id="firstNameField" 
+                   promptText="First Name" 
                    styleClass="input-field"/>
         
+        <TextField fx:id="lastNameField" 
+                   promptText="Last Name" 
+                   styleClass="input-field"/>
+                   
         <TextField fx:id="emailField" 
                    promptText="Email Address" 
                    styleClass="input-field"/>
         
-        <TextField fx:id="usernameField" 
-                   promptText="Username" 
-                   styleClass="input-field"/>
+        
         
         <PasswordField fx:id="passwordField" 
                        promptText="Password" 

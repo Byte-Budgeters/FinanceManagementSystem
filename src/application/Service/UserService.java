@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
 public class UserService {
     private UserRepository userRepository = new UserRepository();
 
-    public boolean registerUser(String email, String password) throws NoSuchAlgorithmException {
+    public boolean registerUser(String email, String password, String firstName, String lastName) throws NoSuchAlgorithmException {
         if (userRepository.existsByEmail(email)) {
             return false;
         }

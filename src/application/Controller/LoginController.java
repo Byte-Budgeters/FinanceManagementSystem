@@ -11,6 +11,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+
+import application.Service.UserService;
 
 public class LoginController {
     @FXML
@@ -21,9 +24,11 @@ public class LoginController {
     
     @FXML
     private Label errorLabel;
+   
+    private UserService userService = new UserService();
     
     @FXML
-    private void handleLoginButton(ActionEvent event) {
+    private void handleLoginButton(ActionEvent event) throws NoSuchAlgorithmException {
         String username = usernameField.getText();
         String password = passwordField.getText();
         
@@ -33,6 +38,14 @@ public class LoginController {
             return;
         }
         
+        if (userService.loginUser(username, password)) {
+           // myMessage.setText("Login successful!");
+           // openDashboard();
+        	System.out.println("Sucess Login");
+        } else {
+        	System.out.println("Fail Login");
+           // myMessage.setText("Invalid email or password!");
+        }
         // Here you would typically add your authentication logic
         System.out.println("Login attempt: " + username);
     }

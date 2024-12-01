@@ -10,10 +10,12 @@ public class UserRepository {
 
     public boolean save(User user) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO \"Byte-Budgeters\".\"Users\" (email, password, created_at) VALUES (?, ?, NOW())")) {
+             PreparedStatement statement = connection.prepareStatement("INSERT INTO \"Byte-Budgeters\".\"Users\" (email, password,first_name,last_name,created_at) VALUES (?, ?,?,?,now())")) {
 
             statement.setString(1, user.getEmail());
             statement.setString(2, user.getPassword());
+            statement.setString(3, user.getFirstName());
+            statement.setString(4, user.getLastName());
             statement.executeUpdate();
             return true;
 
@@ -22,7 +24,7 @@ public class UserRepository {
             return false;
         }
     }
-
+    
     public boolean existsByEmail(String email) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"Byte-Budgeters\".\"Users\" WHERE email = ?")) {

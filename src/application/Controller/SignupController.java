@@ -11,16 +11,19 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+
+import application.Service.UserService;
 
 public class SignupController {
     @FXML
-    private TextField fullNameField;
+    private TextField firstNameField;
     
     @FXML
     private TextField emailField;
     
     @FXML
-    private TextField usernameField;
+    private TextField lastNameField;
     
     @FXML
     private PasswordField passwordField;
@@ -31,15 +34,21 @@ public class SignupController {
     @FXML
     private Label errorLabel;
     
+    private UserService userService = new UserService();
+    
     @FXML
-    private void handleSignUpButton(ActionEvent event) {
+    private void handleSignUpButton(ActionEvent event) throws NoSuchAlgorithmException {
         // Validate input fields
         if (!validateInputs()) {
             return;
         }
         
         // Perform signup logic
-        System.out.println("Signup attempt for: " + usernameField.getText());
+        if(userService.registerUser(emailField.getText(), passwordField.getText(),firstNameField.getText(),lastNameField.getText())) {
+        	errorLabel.setText("SignUp Successfully completed");
+        }
+        
+        System.out.println("Signup attempt for: " + firstNameField.getText());
         
         // You would typically save user to database here
     }
@@ -49,9 +58,9 @@ public class SignupController {
         errorLabel.setText("");
         
         // Check if any field is empty
-        if (fullNameField.getText().isEmpty() || 
+        if (firstNameField.getText().isEmpty() || 
             emailField.getText().isEmpty() || 
-            usernameField.getText().isEmpty() || 
+            lastNameField.getText().isEmpty() || 
             passwordField.getText().isEmpty() || 
             confirmPasswordField.getText().isEmpty()) {
             errorLabel.setText("All fields are required");
@@ -75,7 +84,7 @@ public class SignupController {
             Parent loginRoot = loader.load();
 
             // Get current stage
-            Stage stage = (Stage) usernameField.getScene().getWindow();
+            Stage stage = (Stage) firstNameField.getScene().getWindow();
 
             // Apply new scene and stylesheet
             Scene loginScene = new Scene(loginRoot);
