@@ -19,10 +19,11 @@ public class Main extends Application {
     	//System.out.println(getClass().getResource("/application/View/Test.fxml"));
     	Parent root = FXMLLoader.load(getClass().getResource("/application/View/login.fxml"));
     	// Parent root = FXMLLoader.load(getClass().getResource("./View/login.fxml"));
-        Scene scene = new Scene(root,600,600);
+        Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
         primaryStage.setTitle("Finance Tracker System");
         primaryStage.setScene(scene);
+       // primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 
@@ -68,37 +69,37 @@ public class Main extends Application {
 //         }
          
      //  Create an expense
-         Budget budget = new Budget();
-         budget.setUserId(1);
-         budget.setBudgetCategory("Food");
-         budget.setBudgetAmount(15.50f);
-         budget.setBudgetDescription("Lunch at a cafe");
-         budget.setBudgetDate(new Date());
- 
-        //   Add the expense
-         boolean isBudgetAdded = budgetservice.addBudget(budget);
-         System.out.println("Expense added: " + isBudgetAdded);
-
-        //  Modify the expense (example)
-         budget.setId(1);
-         budget.setBudgetDescription("Dinner at a restaurant");
-         boolean isBudgetModified = budgetservice.modifyBudget(budget);
-         System.out.println("Expense modified: " + isBudgetModified);
-
-        //  Remove the expense
-         boolean isBudgetRemoved = service.removeExpense(budget.getId());
-         System.out.println("Expense removed: " + isBudgetRemoved);
-        
-         Budget budget1 = budgetservice.getBudgetById(2);
-         System.out.println(budget1.toString());
-         
-         List<Budget> budgets = budgetservice.getBudgetByUserId(1);
-         for(Budget e: budgets) {
-         	System.out.println(e.toString());
-         }
-         List<Budget> budgetAll = budgetservice.getAllBudget();
-         for(Budget e: budgetAll) {
-         	System.out.println(e.toString());
-         }
+//         Budget budget = new Budget();
+//         budget.setUserId(1);
+//         budget.setBudgetCategory("Food");
+//         budget.setBudgetAmount(15.50f);
+//         budget.setBudgetDescription("Lunch at a cafe");
+//         budget.setBudgetDate(new Date());
+// 
+//        //   Add the expense
+//         boolean isBudgetAdded = budgetservice.addBudget(budget);
+//         System.out.println("Expense added: " + isBudgetAdded);
+//
+//        //  Modify the expense (example)
+//         budget.setId(1);
+//         budget.setBudgetDescription("Dinner at a restaurant");
+//         boolean isBudgetModified = budgetservice.modifyBudget(budget);
+//         System.out.println("Expense modified: " + isBudgetModified);
+//
+//        //  Remove the expense
+//         boolean isBudgetRemoved = service.removeExpense(budget.getId());
+//         System.out.println("Expense removed: " + isBudgetRemoved);
+//        
+//         Budget budget1 = budgetservice.getBudgetById(2);
+//         System.out.println(budget1.toString());
+//         
+//         List<Budget> budgets = budgetservice.getBudgetByUserId(1);
+//         for(Budget e: budgets) {
+//         	System.out.println(e.toString());
+//         }
+//         List<Budget> budgetAll = budgetservice.getAllBudget();
+//         for(Budget e: budgetAll) {
+//         	System.out.println(e.toString());
+//         }
     }
 }
