@@ -6,6 +6,8 @@ public class User {
     private String email;
     private String password;
     private LocalDateTime createdAt;
+    private String firstName;
+    private String lastName;
 
     // Getters and Setters
     public String getEmail() {
@@ -18,6 +20,22 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+    
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+    
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public void setPassword(String password) {

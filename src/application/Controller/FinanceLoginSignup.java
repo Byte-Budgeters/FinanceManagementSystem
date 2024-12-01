@@ -30,7 +30,7 @@ public class FinanceLoginSignup {
         String email = userName.getText();
         String pwd = password.getText();
 
-        if (userService.registerUser(email, pwd)) {
+        if (userService.registerUser(email, pwd,"Hello","world")) {
             myMessage.setText("User registered successfully!");
         } else {
             myMessage.setText("Email already exists! Please choose another.");
