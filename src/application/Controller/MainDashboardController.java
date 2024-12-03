@@ -34,8 +34,17 @@ public class MainDashboardController {
     }
 
     @FXML
-    public void switchToBudget() {
-        loadView("../View/Budget.fxml");
+   
+    
+    public void handleOpenBudgetView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/View/BudgetView.fxml"));
+            Parent root = loader.load();
+            contentPane.getChildren().clear(); // Clear previous content
+            contentPane.getChildren().add(root); // Add the new content
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     @FXML

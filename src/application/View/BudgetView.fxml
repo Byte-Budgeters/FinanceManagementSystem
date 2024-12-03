@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
+
+<VBox spacing="20" alignment="CENTER" xmlns:fx="http://javafx.com/fxml" fx:controller="application.Controller.BudgetController">
+    <Label text="Budget Manager" style="-fx-font-size: 20; -fx-font-weight: bold;" />
+
+    <!-- Centered TableView -->
+    <TableView fx:id="budgetTable" prefHeight="250" prefWidth="600">
+        <columns>
+            <TableColumn text="Category" fx:id="categoryColumn" prefWidth="150" />
+            <TableColumn text="Limit" fx:id="limitColumn" prefWidth="100" />
+            <TableColumn text="Current Spending" fx:id="spendingColumn" prefWidth="150" />
+            <TableColumn text="Remaining Budget" fx:id="remainingColumn" prefWidth="150" />
+        </columns>
+    </TableView>
+
+    <!-- Centered Controls -->
+    <HBox spacing="15" alignment="CENTER">
+        <ComboBox fx:id="categoryDropdown" promptText="Select Category" prefWidth="150" />
+        <TextField fx:id="limitField" promptText="Limit" prefWidth="100" />
+        <Button text="Add Budget" onAction="#handleAddBudget" prefWidth="120" />
+        <Button text="Delete Selected Budget" onAction="#handleDeleteBudget" prefWidth="150" />
+    </HBox>
+
+    <!-- Centered PieChart -->
+    <PieChart fx:id="spendingChart" title="Spending Analysis" prefHeight="300" prefWidth="300" />
+</VBox>
