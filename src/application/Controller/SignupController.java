@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.regex.Pattern;
 
 import application.Service.UserService;
 
@@ -46,6 +47,8 @@ public class SignupController {
         // Perform signup logic
         if(userService.registerUser(emailField.getText(), passwordField.getText(),firstNameField.getText(),lastNameField.getText())) {
         	errorLabel.setText("SignUp Successfully completed");
+        	errorLabel.setStyle("-fx-text-fill: green;");
+
         }
         
         System.out.println("Signup attempt for: " + firstNameField.getText());
@@ -56,6 +59,7 @@ public class SignupController {
     private boolean validateInputs() {
         // Clear previous errors
         errorLabel.setText("");
+        errorLabel.setStyle("-fx-text-fill: red;");
         
         // Check if any field is empty
         if (firstNameField.getText().isEmpty() || 
@@ -65,6 +69,14 @@ public class SignupController {
             confirmPasswordField.getText().isEmpty()) {
             errorLabel.setText("All fields are required");
             return false;
+        }
+        if(! Pattern.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", emailField.getText())) {
+        	errorLabel.setText("Invalid Email");
+        	return false;
+        }
+        if(passwordField.getText().length()<8) {
+        	errorLabel.setText("Password must be atlest 8 carectors");
+        	return false;
         }
         
         // Check if passwords match

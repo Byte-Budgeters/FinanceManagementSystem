@@ -42,9 +42,7 @@
                            promptText="Password" 
                            styleClass="input-field"/>
             
-            <Button text="Forgot Password?" 
-                    onAction="#handleForgotPasswordButton"
-                    styleClass="forgot-password-button"/>
+           
             
             <VBox spacing="10" alignment="CENTER">
                 <Button text="Login" 
