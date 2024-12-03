@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import application.ExpenseView;
 
 import java.io.IOException;
 
@@ -31,7 +32,7 @@ public class MainDashboardController {
 
     @FXML
     public void switchToExpense() {
-        loadView("../View/Expense.fxml");
+    	loadView("expense");
     }
 
     @FXML
@@ -81,6 +82,11 @@ public class MainDashboardController {
             contentPane.getChildren().clear();
             
             // Load new view
+            if (fxmlPath == "expense") {
+            	VBox view = new ExpenseView().initializeUI();
+            	contentPane.getChildren().add(view);
+            	return;
+            }
             Parent view = FXMLLoader.load(getClass().getResource(fxmlPath));
            
             contentPane.getChildren().add(view);

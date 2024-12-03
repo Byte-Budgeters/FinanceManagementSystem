@@ -40,8 +40,8 @@ public class Expense {
         return expenseAmount;
     }
 
-    public void setExpenseAmount(float expenseAmount) {
-        this.expenseAmount = expenseAmount;
+    public void setExpenseAmount(float amount) {
+        this.expenseAmount = amount;
     }
 
     public String getDescription() {
