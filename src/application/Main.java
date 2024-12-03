@@ -67,6 +67,9 @@ public class Main extends Application {
 //         for(Expense e: expensesAll) {
 //         	System.out.println(e.toString());
 //         }
+//       for(Expense e: expenses) {
+//       	System.out.println(e.toString());
+//       }
          
      //  Create an expense
 //         Budget budget = new Budget();
