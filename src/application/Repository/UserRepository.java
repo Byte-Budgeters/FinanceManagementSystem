@@ -1,6 +1,8 @@
 package application.Repository;
 
 import application.Model.User;
+import application.Resources.UserSession;
+
 import java.sql.*;
 
 public class UserRepository {
@@ -46,7 +48,12 @@ public class UserRepository {
             statement.setString(1, email);
             statement.setString(2, hashedPassword);
             ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            if (resultSet.next()) { 
+                UserSession.setUserID(resultSet.getInt("id")); 
+                return true; // Return true because there's data
+            } else {
+                return false; 
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -24,6 +24,7 @@ public class MainDashboardController {
 
     @FXML
     public void switchToDashboard() {
+    	System.out.println(UserSession.getUserID());
     	 loadView("/application/View/dashboard.fxml");
     }
 
@@ -47,7 +48,7 @@ public class MainDashboardController {
             // Get current stage
             Stage stage = (Stage) contentPane.getScene().getWindow();
             
-            UserSession.setUserID(null);
+            UserSession.clearUserID();
 
             // Apply new scene and stylesheet
             Scene signupScene = new Scene(signupRoot);

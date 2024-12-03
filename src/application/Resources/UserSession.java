@@ -2,20 +2,20 @@ package application.Resources;
 
 public class UserSession {
     // Static variable to hold the userID globally
-    private static String userID = null;
+    private static Integer userID =  null;
 
     // Getter for userID
-    public static String getUserID() {
+    public static Integer getUserID() {
         return userID;
     }
 
     // Setter for userID
-    public static void setUserID(String userID) {
+    public static void setUserID(Integer userID) {
         UserSession.userID = userID;
     }
 
     // Optionally, you can clear the userID when the session ends
     public static void clearUserID() {
-        userID = null;
+        userID =  null;
     }
 }
