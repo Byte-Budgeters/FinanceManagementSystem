@@ -19,6 +19,9 @@ public class ExpenseService {
 	    public List<Expense> getExpensesByUserId(int userId) {
 	        return new ExpenseRepository().getExpensesByUserId(userId); 
 	    }
+	    public List<Expense> getExpensesByCategory(String category) {
+	        return new ExpenseRepository().getExpensesByCategory(category); 
+	    }
 
     public boolean addExpense(Expense expense) {
         if (expense.getExpenseAmount() <= 0) {

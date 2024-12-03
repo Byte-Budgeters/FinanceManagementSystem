@@ -148,4 +148,32 @@ public class ExpenseRepository {
 
         return expenses;
     }
+    
+    public List<Expense> getExpensesByCategory(String category) {
+        String query = "SELECT * FROM \"Byte-Budgeters\".\"Expense\" WHERE category = ?";
+        List<Expense> expenses = new ArrayList<>();
+
+        try (Connection connection = DatabaseService.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setString(1, category);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Expense expense = new Expense();
+                    expense.setId(rs.getInt("id"));
+                    expense.setUserIdFK(rs.getInt("user_id"));
+                    expense.setCategory(rs.getString("category"));
+                    expense.setExpenseAmount(rs.getFloat("expense_amount"));
+                    expense.setDescription(rs.getString("description"));
+                    expense.setExpenseDate(rs.getTimestamp("expense_date"));
+                    expense.setCreatedAt(rs.getTimestamp("created_at"));
+                    expenses.add(expense);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching expenses by user ID: " + e.getMessage());
+        }
+
+        return expenses;
+    }
 }
