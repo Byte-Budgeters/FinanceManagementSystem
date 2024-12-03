@@ -2,7 +2,7 @@ package application.Controller;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import application.Model.Budgeting;
+import application.Model.Budget;
 import application.Manager.BudgetManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -12,15 +12,15 @@ import javafx.scene.control.*;
 public class BudgetController {
 
     @FXML
-    private TableView<Budgeting> budgetTable;
+    private TableView<Budget> budgetTable;
     @FXML
-    private TableColumn<Budgeting, String> categoryColumn;
+    private TableColumn<Budget, String> budgetCategoryColumn;
     @FXML
-    private TableColumn<Budgeting, Double> limitColumn;
+    private TableColumn<Budget, Double> limitColumn;
     @FXML
-    private TableColumn<Budgeting, Double> spendingColumn;
+    private TableColumn<Budget, Double> spendingColumn;
     @FXML
-    private TableColumn<Budgeting, Double> remainingColumn;
+    private TableColumn<Budget, Double> remainingColumn;
 
     @FXML
     private ComboBox<String> categoryDropdown;
@@ -33,29 +33,23 @@ public class BudgetController {
 
     @FXML
     public void initialize() {
-        // Bind table columns
-        // New column for date and time
-
-        categoryColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getCategory()));
+        budgetCategoryColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getBudgetCategory()));
         limitColumn.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getLimit()));
         spendingColumn.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getCurrentSpending()));
         remainingColumn.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getRemainingBudget()));
 
         budgetTable.setItems(budgetManager.getBudgets());
 
-        // Initialize category dropdown
-        categoryDropdown.setItems(FXCollections.observableArrayList("Groceries", "Food", "Travel", "Food", "Entertainment", "Utilities", "Other"));
+        categoryDropdown.setItems(FXCollections.observableArrayList("Groceries", "Food", "Travel", "Entertainment", "Utilities", "Other"));
 
-        // Load saved budgets
         budgetManager.loadBudgets();
         updateSpendingChart();
     }
 
     @FXML
     private void handleAddBudget() {
-        // Validate inputs
-        String category = categoryDropdown.getValue();
-        if (category == null || category.isEmpty()) {
+        String budgetCategory = categoryDropdown.getValue();
+        if (budgetCategory == null || budgetCategory.isEmpty()) {
             showError("Please select a category.");
             return;
         }
@@ -69,32 +63,63 @@ public class BudgetController {
             return;
         }
 
-        // Add budget and clear inputs
-        budgetManager.addBudget(category, limit);
+        budgetManager.addBudget(budgetCategory, limit);
         limitField.clear();
         categoryDropdown.getSelectionModel().clearSelection();
 
-        // Update spending chart
         updateSpendingChart();
+    }
+    
+    @FXML
+    private void handleModifyBudget() {
+        Budget selectedBudget = budgetTable.getSelectionModel().getSelectedItem();
+        if (selectedBudget == null) {
+            showError("Please select a budget to modify.");
+            return;
+        }
+
+        String newLimitText = limitField.getText();
+        double newLimit;
+        try {
+            newLimit = Double.parseDouble(newLimitText);
+        } catch (NumberFormatException e) {
+            showError("Please enter a valid number for the budget limit.");
+            return;
+        }
+
+        // Update the selected budget's limit
+        selectedBudget.setLimit(newLimit);
+        budgetManager.saveBudgets(); // Save the changes
+
+        // Refresh the table
+        budgetTable.refresh();
+
+        // Clear input fields
+        limitField.clear();
+        categoryDropdown.getSelectionModel().clearSelection();
+
+        // Update the Pie Chart
+        updateSpendingChart();
+
+        System.out.println("Budget modified successfully.");
     }
 
     @FXML
     private void handleDeleteBudget() {
-        Budgeting selectedBudget = budgetTable.getSelectionModel().getSelectedItem();
+        Budget selectedBudget = budgetTable.getSelectionModel().getSelectedItem();
         if (selectedBudget == null) {
             showError("Please select a budget to delete.");
             return;
         }
 
-        // Delete the selected budget
         budgetManager.deleteBudget(selectedBudget);
         updateSpendingChart();
     }
 
     private void updateSpendingChart() {
         spendingChart.getData().clear();
-        for (Budgeting budget : budgetManager.getBudgets()) {
-            spendingChart.getData().add(new PieChart.Data(budget.getCategory(), budget.getCurrentSpending()));
+        for (Budget budget : budgetManager.getBudgets()) {
+            spendingChart.getData().add(new PieChart.Data(budget.getBudgetCategory(), budget.getCurrentSpending()));
         }
     }
 

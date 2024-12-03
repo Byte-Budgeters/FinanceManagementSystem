@@ -1,6 +1,6 @@
 package application.Manager;
 
-import application.Model.Budgeting;
+import application.Model.Budget;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -10,40 +10,37 @@ import java.util.List;
 
 public class BudgetManager {
     private static final String FILE_PATH = "budgets.dat";
-    private ObservableList<Budgeting> budgets = FXCollections.observableArrayList();
+    private ObservableList<Budget> budgets = FXCollections.observableArrayList();
 
-    public ObservableList<Budgeting> getBudgets() {
+    public ObservableList<Budget> getBudgets() {
         return budgets;
     }
 
-    public void addBudget(String category, double limit) {
-        budgets.add(new Budgeting(category, limit));
+    public void addBudget(String budgetCategory, double limit) {
+        Budget newBudget = new Budget(budgetCategory, limit);
+        budgets.add(newBudget);
         saveBudgets();
     }
 
-    public void deleteBudget(Budgeting budget) {
+    public void deleteBudget(Budget budget) {
         budgets.remove(budget);
         saveBudgets();
     }
 
     public void loadBudgets() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
-            // Load data as a standard list
-            List<Budgeting> loadedBudgets = (List<Budgeting>) ois.readObject();
-            // Convert the list to an ObservableList
+            List<Budget> loadedBudgets = (List<Budget>) ois.readObject();
             budgets.setAll(loadedBudgets);
         } catch (FileNotFoundException e) {
-            // File not found: no saved data exists yet
             System.out.println("No existing budget data found.");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    private void saveBudgets() {
+    public void saveBudgets() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
-            // Convert ObservableList to a standard ArrayList for serialization
-            List<Budgeting> serializableList = new ArrayList<>(budgets);
+            List<Budget> serializableList = new ArrayList<>(budgets);
             oos.writeObject(serializableList);
             System.out.println("Budgets saved successfully to " + FILE_PATH);
         } catch (IOException e) {

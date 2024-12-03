@@ -9,7 +9,7 @@
     <!-- Centered TableView -->
     <TableView fx:id="budgetTable" prefHeight="250" prefWidth="600">
         <columns>
-            <TableColumn text="Category" fx:id="categoryColumn" prefWidth="150" />
+            <TableColumn text="Budget Category" fx:id="budgetCategoryColumn" prefWidth="150" />
             <TableColumn text="Limit" fx:id="limitColumn" prefWidth="100" />
             <TableColumn text="Current Spending" fx:id="spendingColumn" prefWidth="150" />
             <TableColumn text="Remaining Budget" fx:id="remainingColumn" prefWidth="150" />
@@ -22,6 +22,7 @@
         <TextField fx:id="limitField" promptText="Limit" prefWidth="100" />
         <Button text="Add Budget" onAction="#handleAddBudget" prefWidth="120" />
         <Button text="Delete Selected Budget" onAction="#handleDeleteBudget" prefWidth="150" />
+        <Button text="Modify Budget" onAction="#handleModifyBudget" prefWidth="150" />
     </HBox>
 
     <!-- Centered PieChart -->

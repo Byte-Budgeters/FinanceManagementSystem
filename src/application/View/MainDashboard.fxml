@@ -10,17 +10,10 @@
     
     <!-- Vertical Navigation Bar -->
     <VBox fx:id="navigationBar" maxWidth="250" minWidth="200" spacing="10" styleClass="sidebar">
-        
-        <!-- Navigation buttons -->
         <Button fx:id="dashboardButton" onAction="#switchToDashboard" styleClass="nav-button" text="Dashboard" />
         <Button fx:id="analyticsButton" onAction="#switchToExpense" styleClass="nav-button" text="Expense" />
-          <!-- Add the "Manage Budgets" button -->
         <Button fx:id="manageBudgetsButton" onAction="#handleOpenBudgetView" styleClass="nav-button" text="Budget" />
-        
-        <!-- Spacer to push logout button to the bottom -->
-        <Region VBox.vgrow="ALWAYS"/>
-        
-        <!-- Logout button -->
+        <Region VBox.vgrow="ALWAYS" />
         <Button fx:id="logout" onAction="#logout" styleClass="nav-button" text="Logout" />
     </VBox>
     

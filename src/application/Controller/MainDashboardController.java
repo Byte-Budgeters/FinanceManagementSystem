@@ -2,6 +2,7 @@ package application.Controller;
 
 
 import javafx.fxml.FXML;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -34,16 +35,19 @@ public class MainDashboardController {
     }
 
     @FXML
-   
-    
-    public void handleOpenBudgetView() {
+    private void handleOpenBudgetView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/View/BudgetView.fxml"));
-            Parent root = loader.load();
-            contentPane.getChildren().clear(); // Clear previous content
-            contentPane.getChildren().add(root); // Add the new content
-        } catch (Exception e) {
+            // Load the BudgetView.fxml
+            Parent budgetView = FXMLLoader.load(getClass().getResource("/application/View/BudgetView.fxml"));
+
+            // Clear the current content and add the Budget view
+            contentPane.getChildren().clear();
+            contentPane.getChildren().add(budgetView);
+
+            System.out.println("Navigated to Budget View successfully.");
+        } catch (IOException e) {
             e.printStackTrace();
+            System.err.println("Failed to load Budget View.");
         }
     }
     
