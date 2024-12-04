@@ -1,6 +1,8 @@
 package application.Repository;
 
 import application.Model.Expense;
+import application.Model.ExpenseSummary;
+import application.Resources.UserSession;
 import application.Service.DatabaseService;
 
 import java.sql.*;
@@ -176,4 +178,90 @@ public class ExpenseRepository {
 
         return expenses;
     }
+    public ExpenseSummary getMonthlyExpenseSummaryAndAverageForLast3Months(ExpenseSummary summary, int year, int month) {
+        String monthlyExpenseSummaryQuery = """
+            WITH MonthlyExpenses AS (
+                SELECT 
+                    category,
+                    SUM(expense_amount) AS total_expense
+                FROM "Byte-Budgeters"."Expense"
+                WHERE user_id = ?
+                  AND EXTRACT(YEAR FROM expense_date) = ?
+                  AND EXTRACT(MONTH FROM expense_date) = ?
+                GROUP BY category
+            ),
+            MaxCategory AS (
+                SELECT category AS max_category
+                FROM MonthlyExpenses
+                WHERE total_expense = (SELECT MAX(total_expense) FROM MonthlyExpenses)
+                LIMIT 1
+            ),
+            MinCategory AS (
+                SELECT category AS min_category
+                FROM MonthlyExpenses
+                WHERE total_expense = (SELECT MIN(total_expense) FROM MonthlyExpenses)
+                LIMIT 1
+            )
+            SELECT 
+                (SELECT MAX(total_expense) FROM MonthlyExpenses) AS max_expense,
+                (SELECT MIN(total_expense) FROM MonthlyExpenses) AS min_expense,
+                (SELECT SUM(total_expense) FROM MonthlyExpenses) AS total_monthly_expense,
+                (SELECT max_category FROM MaxCategory) AS max_category,
+                (SELECT min_category FROM MinCategory) AS min_category;
+        """;
+
+        String averageMonthlyExpenseQuery = """
+            WITH Last3MonthsExpenses AS (
+                SELECT 
+                    EXTRACT(MONTH FROM expense_date) AS month, 
+                    EXTRACT(YEAR FROM expense_date) AS year, 
+                    SUM(expense_amount) AS total_expense
+                FROM "Byte-Budgeters"."Expense"
+                WHERE user_id = ?
+                  AND expense_date >= CURRENT_DATE - INTERVAL '3 MONTH'
+                GROUP BY EXTRACT(MONTH FROM expense_date), EXTRACT(YEAR FROM expense_date)
+            )
+            SELECT 
+                AVG(total_expense) AS avg_monthly_expense
+            FROM Last3MonthsExpenses;
+        """;
+
+        try (Connection connection = DatabaseService.getConnection()) {
+            // First query: Get monthly expense summary
+            try (PreparedStatement stmt = connection.prepareStatement(monthlyExpenseSummaryQuery)) {
+                stmt.setInt(1, UserSession.getUserID());
+                stmt.setInt(2, year);
+                stmt.setInt(3, month);
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        summary.setMaxExpenseAmount(rs.getDouble("max_expense"));
+                        summary.setMinExpenseAmount(rs.getDouble("min_expense"));
+                        summary.setTotalExpenseAmount(rs.getDouble("total_monthly_expense"));
+                        summary.setMaxExpenseCategory(rs.getString("max_category"));
+                        summary.setMinExpenseCategory(rs.getString("min_category"));
+                        
+                    }
+                }
+            }
+
+            // Second query: Get average monthly expense for the last 3 months
+            try (PreparedStatement stmt = connection.prepareStatement(averageMonthlyExpenseQuery)) {
+                stmt.setInt(1, UserSession.getUserID());
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        summary.setAvgThreeMonthExpense(rs.getFloat("avg_monthly_expense"));
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error fetching monthly expense summary and average for last 3 months: " + e.getMessage());
+        }
+
+        return summary;
+    }
+
+
 }
