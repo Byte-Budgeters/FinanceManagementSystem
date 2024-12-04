@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="30" style="-fx-background-color: linear-gradient(to bottom, #f0f4f8, #e0e8f0);" stylesheets="@Dashboard.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller.ProfileController">
+
+    <padding>
+        <Insets bottom="40" left="40" right="40" top="40" />
+    </padding>
+
+    <!-- Profile Overview VBox -->
+    <VBox alignment="CENTER" spacing="10" style="-fx-background-color: white;                   -fx-background-radius: 15;                   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);">
+        <padding>
+            <Insets bottom="30" left="30" right="30" top="30" />
+        </padding>
+
+        <Label style="-fx-font-size: 24px;                        -fx-font-weight: bold;                        -fx-text-fill: #2c3e50;" text="Profile Overview" />
+
+        <VBox alignment="CENTER_LEFT" spacing="15">
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Label style="-fx-font-weight: bold;                                -fx-text-fill: #34495e;" text="Name:" />
+                <Label fx:id="nameLabel" style="-fx-text-fill: #2c3e50;" text="John Doe" />
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Label style="-fx-font-weight: bold;                                -fx-text-fill: #34495e;" text="Email:" />
+                <Label fx:id="emailLabel" style="-fx-text-fill: #2c3e50;" text="johndoe@example.com" />
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Label style="-fx-font-weight: bold;                                -fx-text-fill: #34495e;" text="Member Since:" />
+                <Label fx:id="createdAtLabel" style="-fx-text-fill: #2c3e50;" text="January 15, 2023" />
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Button onAction="#handleChangePassword" styleClass="primary-button" text="Change Password" />
+                
+                <Button onAction="#handleDeleteAccount" styleClass="red-button" text="Delete Account" />
+            </HBox>
+        </VBox>
+    </VBox>
+
+    <!-- Hidden Password Change Form (Initially Hidden) -->
+    <VBox fx:id="passwordChangeBox" alignment="CENTER" prefHeight="390.0" prefWidth="408.0" spacing="30" style="-fx-background-color: white;                   -fx-background-radius: 15;                   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);" visible="false">
+        <Label style="-fx-font-size: 24px;                        -fx-font-weight: bold;                        -fx-text-fill: #2c3e50;                       -fx-padding: 20px;                       -fx-margin-top: 20px;" text="Change Password" />
+
+        <HBox spacing="10">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #34495e; -fx-padding: 10;
+    -fx-font-size: 14px;" text="Current Password:" />
+            <PasswordField fx:id="currentPasswordField" promptText="Enter current password" styleClass="input-field" />
+        </HBox>
+
+        <HBox spacing="10">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #34495e; -fx-padding: 10;
+    -fx-font-size: 14px;" text="New Password:" />
+            <PasswordField fx:id="newPasswordField" promptText="Enter new password" styleClass="input-field" />
+        </HBox>
+
+        <HBox spacing="10">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #34495e; -fx-padding: 10;
+    -fx-font-size: 14px;" text="Confirm Password:" />
+            <PasswordField fx:id="confirmPasswordField" promptText="Confirm new password" styleClass="input-field" />
+            
+             <Label fx:id="errorLabel" 
+                   styleClass="error-label"/>
+        </HBox>
+
+        <HBox alignment="CENTER" spacing="15">
+            <Button alignment="BOTTOM_LEFT" onAction="#handleConfirmChangePassword" styleClass="primary-button" text="Change Password" />
+            <Button onAction="#handleCancelChangePassword" styleClass="red-button" text="Cancel" />
+        </HBox>
+    </VBox>
+</VBox>
