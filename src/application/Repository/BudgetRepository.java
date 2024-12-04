@@ -1,6 +1,7 @@
 package application.Repository;
 
 import application.Model.Budget;
+import application.Resources.UserSession;
 import application.Service.DatabaseService;
 import java.util.Date;
 
@@ -17,7 +18,7 @@ public class BudgetRepository {
         try (Connection connection = DatabaseService.getConnection();
              PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-            statement.setInt(1, budget.getUserId());
+            statement.setInt(1, UserSession.getUserID());
             statement.setString(2, budget.getBudgetCategory());
             statement.setDouble(3, budget.getLimit());
             statement.setDouble(4, budget.getCurrentSpending());
@@ -62,7 +63,7 @@ public class BudgetRepository {
         try (Connection connection = DatabaseService.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setInt(1, budget.getUserId());
+            statement.setInt(1, UserSession.getUserID());
             statement.setString(2, budget.getBudgetCategory());
             statement.setDouble(3, budget.getLimit());
             statement.setDouble(4, budget.getCurrentSpending());
@@ -158,7 +159,7 @@ public class BudgetRepository {
         budget.setId(rs.getInt("id"));
         budget.setUserId(rs.getInt("user_id"));
         budget.setBudgetCategory(rs.getString("budget_category"));
-        budget.setLimit(rs.getDouble("limit"));
+        budget.setLimit(rs.getDouble("budget_limit"));
         budget.setCurrentSpending(rs.getDouble("current_spending"));
         budget.setBudgetDate(rs.getTimestamp("budget_date"));
         budget.setCreatedAt(rs.getTimestamp("created_at"));

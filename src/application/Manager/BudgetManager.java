@@ -1,6 +1,7 @@
 package application.Manager;
 
 import application.Model.Budget;
+import application.Resources.UserSession;
 import application.Service.BudgetService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,7 +34,7 @@ public class BudgetManager {
     }
 
     public void loadBudgets() {
-        List<Budget> budgetList = budgetService.getAllBudget(); // Fetch from database
+        List<Budget> budgetList = budgetService.getBudgetByUserId(UserSession.getUserID()); // Fetch from database
         budgets.setAll(budgetList); // Update in-memory list
     }
 
