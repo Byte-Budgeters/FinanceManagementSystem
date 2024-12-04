@@ -86,6 +86,7 @@ public class BudgetController {
         // Clear fields and update UI
         limitField.clear();
         categoryDropdown.getSelectionModel().clearSelection();
+        budgetTable.setItems(budgetManager.getBudgets());
         updateSpendingChart();
     }
 
@@ -121,6 +122,7 @@ public class BudgetController {
         }
 
         budgetManager.deleteBudget(selectedBudget);
+        budgetTable.setItems(budgetManager.getBudgets());
         updateSpendingChart();
     }
 
