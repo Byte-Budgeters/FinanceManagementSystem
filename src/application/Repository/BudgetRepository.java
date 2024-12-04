@@ -1,6 +1,7 @@
 package application.Repository;
 
 import application.Model.Budget;
+import application.Resources.UserSession;
 import application.Service.DatabaseService;
 import java.util.Date;
 
@@ -17,7 +18,7 @@ public class BudgetRepository {
         try (Connection connection = DatabaseService.getConnection();
              PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-            statement.setInt(1, budget.getUserId());
+            statement.setInt(1, UserSession.getUserID());
             statement.setString(2, budget.getBudgetCategory());
             statement.setDouble(3, budget.getLimit());
             statement.setDouble(4, budget.getCurrentSpending());
