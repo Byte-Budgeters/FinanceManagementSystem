@@ -110,7 +110,7 @@ public class ProfileController {
             // Apply new scene and stylesheet
             Scene signupScene = new Scene(signupRoot);
             signupScene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
-            stage.setFullScreen(true);
+           // stage.setFullScreen(true);
             stage.setScene(signupScene);
             stage.setTitle("Login");
         } catch (IOException e) {
