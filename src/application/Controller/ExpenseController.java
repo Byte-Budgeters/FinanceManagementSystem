@@ -49,6 +49,7 @@ public class ExpenseController implements ExpenseControl {
 	DatePicker expenseDateInput;
 	
 	private static int editIndex = -1;
+	private static Expense editExpense;
 	
 	public void setData(Expense expense, int index) {
 		editIndex = index;
@@ -60,6 +61,7 @@ public class ExpenseController implements ExpenseControl {
 			      .atZone(ZoneId.systemDefault())
 			      .toLocalDate();
 		expenseDateInput.setValue(dateLocal);
+		editExpense = expense;
 		msgLabel.setText("");
 	}
 	
@@ -102,20 +104,28 @@ public class ExpenseController implements ExpenseControl {
 			return;
 		}
 		
-		Date date = java.sql.Date.valueOf(selectedDate);		
+		Date date = java.sql.Date.valueOf(selectedDate);
+		
 		 		
-		Expense expense = new Expense();
-		expense.setUserIdFK(UserSession.getUserID());
+		Expense expense;
+		
+		if (editIndex == -1) {
+			expense = new Expense();
+			expense.setUserIdFK(UserSession.getUserID());
+			expense.setCreatedAt(new Date());
+		} else {
+			expense = editExpense;
+		}
+		
 		expense.setCategory(expenseType);
 		expense.setDescription(description);
 		expense.setExpenseAmount(amount);
 		expense.setExpenseDate(date);
-		expense.setCreatedAt(new Date());
 		
 		ExpenseService expenseService = new ExpenseService();
 		
 		if (editIndex != -1) {
-			
+			System.out.println(expense.getId());
 			boolean res = expenseService.modifyExpense(expense);
 			if (!res) {
 				msgLabel.setText("Something went wrong.");
