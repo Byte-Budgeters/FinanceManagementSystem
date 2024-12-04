@@ -1,6 +1,7 @@
 package application;
 
 import application.Model.Expense;
+import application.Resources.UserSession;
 import application.Service.ExpenseService;
 import java.io.IOException;
 import java.util.List;
@@ -22,7 +23,7 @@ public class ExpenseView {
 	
 	public VBox initializeUI() {
 		
-		List<Expense> allExpenses = new ExpenseService().getAllExpenses();
+		List<Expense> allExpenses = new ExpenseService().getExpensesByUserId(UserSession.getUserID());
 		expenses.clear();
 //		System.out.println("zzzzzzaaaaaaaa");
 		expenses.addAll(allExpenses);
