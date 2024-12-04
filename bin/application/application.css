@@ -127,3 +127,6 @@
     -fx-text-fill: white;
     -fx-background-radius: 5px;
 }
+.scroll-pane{
+	-fx-background-color: white;
+}

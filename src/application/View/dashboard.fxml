@@ -6,7 +6,7 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml"
 fx:controller="application.Controller.DashboardController"
 
- style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);" prefWidth="600" prefHeight="400">
+  prefWidth="600" prefHeight="400">
     <top>
         <HBox alignment="CENTER" spacing="10" style="-fx-padding: 20; -fx-background-color: linear-gradient(to right, #3a7bd5, #00d2ff);">
             <Label text="Select Month and Year:" style="-fx-font-size: 16; -fx-text-fill: white; -fx-font-weight: bold;"/>

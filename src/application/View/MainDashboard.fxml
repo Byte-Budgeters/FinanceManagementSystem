@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.ScrollPane?>
 
 <HBox prefHeight="600" prefWidth="800" spacing="0" stylesheets="@Dashboard.css" HBox.hgrow="ALWAYS" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="application.Controller.MainDashboardController">
     
@@ -27,7 +28,9 @@
     </VBox>
     
     <!-- Content Area -->
-    <StackPane fx:id="contentPane" styleClass="content-area" HBox.hgrow="ALWAYS">
-        <!-- Dynamically loaded content will appear here -->
-    </StackPane>
+   <ScrollPane fx:id="contentScrollPane" styleClass="scroll-pane" fitToWidth="true" HBox.hgrow="ALWAYS">
+        <StackPane fx:id="contentPane" styleClass="">
+            <!-- Dynamically loaded content will appear here -->
+        </StackPane>
+    </ScrollPane>
 </HBox>

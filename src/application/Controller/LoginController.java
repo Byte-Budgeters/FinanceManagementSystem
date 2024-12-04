@@ -53,7 +53,7 @@ public class LoginController {
                 // Apply new scene and stylesheet
                 Scene signupScene = new Scene(signupRoot);
                 signupScene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
-                stage.setFullScreen(true);
+//                stage.setFullScreen(true);
                 stage.setScene(signupScene);
                 stage.setTitle("Dashboard");
             } catch (IOException e) {
@@ -82,7 +82,7 @@ public class LoginController {
             // Apply new scene and stylesheet
             Scene signupScene = new Scene(signupRoot);
             signupScene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
-            stage.setFullScreen(true);
+//            stage.setFullScreen(true);
             stage.setScene(signupScene);
             stage.setTitle("Sign Up");
         } catch (IOException e) {
