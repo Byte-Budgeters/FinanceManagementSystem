@@ -45,6 +45,7 @@
     -fx-font-size: 16px;
     -fx-text-fill: #7f8c8d;
 }
+
 .hover-effect {
     -fx-transition: -fx-background-color 0.3s ease;
 }
@@ -57,4 +58,21 @@
 .button {
     -fx-font-family: 'Arial';
     -fx-font-weight: bold;
+
+.table-view {
+    -fx-border-color: #dcdcdc;
+    -fx-border-width: 1;
+    -fx-background-color: #f7f7f7;
+    -fx-padding: 5;
+    -fx-pref-height: 250px; /* Ensures table height */
+    -fx-pref-width: 600px; /* Ensures table width */
+}
+
+.pie-chart {
+    -fx-background-color: transparent;
+    -fx-padding: 10;
+    -fx-alignment: center;
+    -fx-pref-height: 300px; /* Ensures consistent chart size */
+    -fx-pref-width: 300px;
+
 }

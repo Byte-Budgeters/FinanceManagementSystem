@@ -10,6 +10,19 @@ public class Budget {
     private String budgetDescription;
     private Date budgetDate;
     private Date createdAt;
+    private double limit;
+    private double currentSpending;
+    
+    public Budget() {
+    	
+    }
+    
+    public Budget(String budgetCategory, double limit) {
+    	this.budgetCategory = budgetCategory;
+        this.limit = limit;
+        this.currentSpending = 0.0; // Initialize spending to 0
+        this.createdAt = new java.util.Date(); 
+    }
 
     // Getters and setters
     public int getId() {
@@ -68,6 +81,26 @@ public class Budget {
         this.createdAt = createdAt;
     }
     
+    public double getLimit() {
+        return limit;
+    }
+    
+    public double setLimit(double Limit) {
+        return limit;
+    }
+
+    public double getCurrentSpending() {
+        return currentSpending;
+    }
+
+    public double getRemainingBudget() {
+        return limit - currentSpending;
+    }
+
+    // Add spending
+    public void addSpending(double amount) {
+        this.currentSpending += amount;
+    }
     @Override
     public String toString() {
         return "Expense{" +

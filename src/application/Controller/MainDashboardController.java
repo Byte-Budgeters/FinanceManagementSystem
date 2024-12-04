@@ -2,12 +2,14 @@ package application.Controller;
 
 
 import javafx.fxml.FXML;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import application.ExpenseView;
 
 import java.io.IOException;
 
@@ -30,12 +32,24 @@ public class MainDashboardController {
 
     @FXML
     public void switchToExpense() {
-        loadView("../View/Expense.fxml");
+    	loadView("expense");
     }
 
     @FXML
-    public void switchToBudget() {
-        loadView("../View/Budget.fxml");
+    private void handleOpenBudgetView() {
+        try {
+            // Load the BudgetView.fxml
+            Parent budgetView = FXMLLoader.load(getClass().getResource("/application/View/BudgetView.fxml"));
+
+            // Clear the current content and add the Budget view
+            contentPane.getChildren().clear();
+            contentPane.getChildren().add(budgetView);
+
+            System.out.println("Navigated to Budget View successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load Budget View.");
+        }
     }
     @FXML
     public void switchToProfile() {
@@ -77,6 +91,11 @@ public class MainDashboardController {
             contentPane.getChildren().clear();
             
             // Load new view
+            if (fxmlPath == "expense") {
+            	VBox view = new ExpenseView().initializeUI();
+            	contentPane.getChildren().add(view);
+            	return;
+            }
             Parent view = FXMLLoader.load(getClass().getResource(fxmlPath));
            
             contentPane.getChildren().add(view);
