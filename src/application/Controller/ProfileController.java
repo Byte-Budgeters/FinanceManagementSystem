@@ -103,7 +103,7 @@ public class ProfileController {
             Parent signupRoot = loader.load();
 
             // Get current stage
-            Stage stage = (Stage) contentPane.getScene().getWindow();
+            Stage stage = (Stage) passwordChangeBox.getScene().getWindow();;
             
             UserSession.clearUserID();
 
@@ -120,29 +120,5 @@ public class ProfileController {
             e.printStackTrace();
         }
     } 
-//    @FXML
-//    public void handleDeleteAccount() {
-//    	userService.deleteUser();
-//    	try {
-//            // Load the signup FXML
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/View/login.fxml"));
-//            Parent signupRoot = loader.load();
-//
-//            // Get current stage
-//            Stage stage = (Stage) contentPane.getScene().getWindow();
-//            
-//            UserSession.clearUserID();
-//
-//            // Apply new scene and stylesheet
-//            Scene signupScene = new Scene(signupRoot);
-//            signupScene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
-//            stage.setFullScreen(true);
-//            stage.setScene(signupScene);
-//            stage.setTitle("Login");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//           
-//        }
-//        
-//    }
+
 }
