@@ -1,13 +1,18 @@
 package application.Controller;
 
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.ReadOnlyStringWrapper;
 import application.Model.Budget;
 import application.Manager.BudgetManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import java.util.Date;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BudgetController {
 
@@ -33,17 +38,27 @@ public class BudgetController {
 
     @FXML
     public void initialize() {
+        // Initialize table columns
         budgetCategoryColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getBudgetCategory()));
         limitColumn.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getLimit()));
         spendingColumn.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getCurrentSpending()));
         remainingColumn.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getRemainingBudget()));
 
+        // Load data into the TableView
         budgetTable.setItems(budgetManager.getBudgets());
 
+        // Populate the category dropdown
         categoryDropdown.setItems(FXCollections.observableArrayList("Groceries", "Food", "Travel", "Entertainment", "Utilities", "Other"));
 
-        budgetManager.loadBudgets();
+        // Update the spending chart
         updateSpendingChart();
+
+        // Restrict limit field to numeric input
+        limitField.textProperty().addListener((obs, oldText, newText) -> {
+            if (!newText.matches("\\d*(\\.\\d*)?")) {
+                limitField.setText(oldText);
+            }
+        });
     }
 
     @FXML
@@ -63,13 +78,17 @@ public class BudgetController {
             return;
         }
 
+        // Add the budget
+        Budget newBudget = new Budget(budgetCategory, limit);
+        newBudget.setBudgetDate(new Date());
         budgetManager.addBudget(budgetCategory, limit);
+
+        // Clear fields and update UI
         limitField.clear();
         categoryDropdown.getSelectionModel().clearSelection();
-
         updateSpendingChart();
     }
-    
+
     @FXML
     private void handleModifyBudget() {
         Budget selectedBudget = budgetTable.getSelectionModel().getSelectedItem();
@@ -87,21 +106,10 @@ public class BudgetController {
             return;
         }
 
-        // Update the selected budget's limit
         selectedBudget.setLimit(newLimit);
-        budgetManager.saveBudgets(); // Save the changes
-
-        // Refresh the table
+        budgetManager.modifyBudget(selectedBudget);
         budgetTable.refresh();
-
-        // Clear input fields
-        limitField.clear();
-        categoryDropdown.getSelectionModel().clearSelection();
-
-        // Update the Pie Chart
         updateSpendingChart();
-
-        System.out.println("Budget modified successfully.");
     }
 
     @FXML
@@ -118,13 +126,16 @@ public class BudgetController {
 
     private void updateSpendingChart() {
         spendingChart.getData().clear();
+        Map<String, Double> spendingByCategory = new HashMap<>();
         for (Budget budget : budgetManager.getBudgets()) {
-            spendingChart.getData().add(new PieChart.Data(budget.getBudgetCategory(), budget.getCurrentSpending()));
+            spendingByCategory.merge(budget.getBudgetCategory(), budget.getCurrentSpending(), Double::sum);
         }
+        spendingByCategory.forEach((category, spending) ->
+            spendingChart.getData().add(new PieChart.Data(category, spending)));
     }
 
     private void showError(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error");
         alert.setContentText(message);
         alert.showAndWait();

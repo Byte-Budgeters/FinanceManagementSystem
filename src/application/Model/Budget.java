@@ -3,25 +3,27 @@ package application.Model;
 import java.util.Date;
 
 public class Budget {
-	private int id;
+    private int id;
     private int userId;
     private String budgetCategory;
-    private float budgetAmount;
+    private float budgetAmount; // Retained for compatibility
     private String budgetDescription;
     private Date budgetDate;
     private Date createdAt;
     private double limit;
     private double currentSpending;
-    
+
     public Budget() {
-    	
+    	this.budgetDate = new Date();
+        this.createdAt = new Date();
     }
-    
+
     public Budget(String budgetCategory, double limit) {
-    	this.budgetCategory = budgetCategory;
+        this.budgetCategory = budgetCategory;
         this.limit = limit;
         this.currentSpending = 0.0; // Initialize spending to 0
-        this.createdAt = new java.util.Date(); 
+        this.budgetDate = new Date(); // Default to current date
+        this.createdAt = new Date();
     }
 
     // Getters and setters
@@ -80,17 +82,21 @@ public class Budget {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-    
+
     public double getLimit() {
         return limit;
     }
-    
-    public double setLimit(double Limit) {
-        return limit;
+
+    public void setLimit(double limit) {
+        this.limit = limit;
     }
 
     public double getCurrentSpending() {
         return currentSpending;
+    }
+
+    public void setCurrentSpending(double currentSpending) {
+        this.currentSpending = currentSpending;
     }
 
     public double getRemainingBudget() {
@@ -101,15 +107,18 @@ public class Budget {
     public void addSpending(double amount) {
         this.currentSpending += amount;
     }
+
     @Override
     public String toString() {
-        return "Expense{" +
+        return "Budget{" +
                "id=" + id +
                ", userId=" + userId +
-               ", category='" + budgetCategory + '\'' +
-               ", expenseAmount=" + budgetAmount +
+               ", budgetCategory='" + budgetCategory + '\'' +
+               ", budgetAmount=" + budgetAmount +
                ", description='" + budgetDescription + '\'' +
-               ", expenseDate=" + budgetDate +
+               ", limit=" + limit +
+               ", currentSpending=" + currentSpending +
+               ", budgetDate=" + budgetDate +
                ", createdAt=" + createdAt +
                '}';
     }

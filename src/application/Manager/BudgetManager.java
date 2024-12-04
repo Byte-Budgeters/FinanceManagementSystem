@@ -1,51 +1,45 @@
 package application.Manager;
 
 import application.Model.Budget;
+import application.Service.BudgetService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BudgetManager {
-    private static final String FILE_PATH = "budgets.dat";
     private ObservableList<Budget> budgets = FXCollections.observableArrayList();
+    private BudgetService budgetService = new BudgetService();
+
+    public BudgetManager() {
+        loadBudgets(); // Load budgets from the database
+    }
 
     public ObservableList<Budget> getBudgets() {
-        return budgets;
+        return FXCollections.observableArrayList(budgets);
     }
 
     public void addBudget(String budgetCategory, double limit) {
-        Budget newBudget = new Budget(budgetCategory, limit);
-        budgets.add(newBudget);
-        saveBudgets();
-    }
-
-    public void deleteBudget(Budget budget) {
-        budgets.remove(budget);
-        saveBudgets();
-    }
-
-    public void loadBudgets() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
-            List<Budget> loadedBudgets = (List<Budget>) ois.readObject();
-            budgets.setAll(loadedBudgets);
-        } catch (FileNotFoundException e) {
-            System.out.println("No existing budget data found.");
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+        Budget newBudget = new Budget(budgetCategory, limit); // Create a new budget
+        if (budgetService.addBudget(newBudget)) { // Save to database
+            budgets.add(newBudget); // Add to in-memory list
         }
     }
 
-    public void saveBudgets() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
-            List<Budget> serializableList = new ArrayList<>(budgets);
-            oos.writeObject(serializableList);
-            System.out.println("Budgets saved successfully to " + FILE_PATH);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error saving budgets to file.");
+    public void deleteBudget(Budget budget) {
+        if (budgetService.removeBudget(budget.getId())) { // Remove from database
+            budgets.remove(budget); // Remove from in-memory list
+        }
+    }
+
+    public void loadBudgets() {
+        List<Budget> budgetList = budgetService.getAllBudget(); // Fetch from database
+        budgets.setAll(budgetList); // Update in-memory list
+    }
+
+    public void modifyBudget(Budget budget) {
+        if (budgetService.modifyBudget(budget)) { // Update in database
+            budgets.set(budgets.indexOf(budget), budget); // Update in-memory list
         }
     }
 }
