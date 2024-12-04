@@ -12,8 +12,18 @@
     <VBox fx:id="navigationBar" maxWidth="250" minWidth="200" spacing="10" styleClass="sidebar">
         <Button fx:id="dashboardButton" onAction="#switchToDashboard" styleClass="nav-button" text="Dashboard" />
         <Button fx:id="analyticsButton" onAction="#switchToExpense" styleClass="nav-button" text="Expense" />
+
+        <Button fx:id="settingsButton" onAction="#switchToBudget" styleClass="nav-button" text="Budget" />
+        <Button fx:id="settingsButton" onAction="#switchToProfile" styleClass="nav-button" text="Profile" />
+        
+        <!-- Spacer to push logout button to the bottom -->
+        <Region VBox.vgrow="ALWAYS"/>
+        
+        <!-- Logout button -->
+
         <Button fx:id="manageBudgetsButton" onAction="#handleOpenBudgetView" styleClass="nav-button" text="Budget" />
         <Region VBox.vgrow="ALWAYS" />
+
         <Button fx:id="logout" onAction="#logout" styleClass="nav-button" text="Logout" />
     </VBox>
     

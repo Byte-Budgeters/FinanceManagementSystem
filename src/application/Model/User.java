@@ -1,11 +1,12 @@
 package application.Model;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class User {
     private String email;
     private String password;
-    private LocalDateTime createdAt;
+    private Date createdAt;
     private String firstName;
     private String lastName;
 
@@ -42,11 +43,11 @@ public class User {
         this.password = password;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 }

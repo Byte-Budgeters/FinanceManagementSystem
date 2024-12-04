@@ -51,6 +51,15 @@ public class MainDashboardController {
             System.err.println("Failed to load Budget View.");
         }
     }
+    @FXML
+    public void switchToProfile() {
+        loadView("../View/Profile.fxml");
+    }
+    
+    @FXML
+    public  void switchToChangePassword() {
+    	loadView("../View/ChangePassword.fxml");
+    }
     
     @FXML
     public void logout() throws IOException {

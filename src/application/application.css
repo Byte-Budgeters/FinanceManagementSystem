@@ -61,7 +61,17 @@
 .secondary-button:hover {
     -fx-background-color: rgba(52, 148, 230, 0.1);
 }
+.red-button {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+}
 
+.red-button:hover {
+    -fx-background-color: #D20103;
+}
 .forgot-password-button {
     -fx-background-color: transparent;
     -fx-text-fill: #777;
