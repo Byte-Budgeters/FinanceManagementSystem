@@ -150,6 +150,41 @@ public class ExpenseRepository {
 
         return expenses;
     }
+    public List<Expense> getExpensesByUserIdAndMonthAndYear(int userId, int month, int year) {
+        String query = "SELECT * FROM \"Byte-Budgeters\".\"Expense\" " +
+                       "WHERE user_id = ? AND EXTRACT(MONTH FROM expense_date) = ? " +
+                       "AND EXTRACT(YEAR FROM expense_date) = ? " +
+                       "ORDER BY expense_date DESC";
+        List<Expense> expenses = new ArrayList<>();
+
+        try (Connection connection = DatabaseService.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setInt(1, userId);
+            stmt.setInt(2, month);
+            stmt.setInt(3, year);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Expense expense = new Expense();
+                    expense.setId(rs.getInt("id"));
+                    expense.setUserIdFK(rs.getInt("user_id"));
+                    expense.setCategory(rs.getString("category"));
+                    expense.setExpenseAmount(rs.getFloat("expense_amount"));
+                    expense.setDescription(rs.getString("description"));
+                    expense.setExpenseDate(rs.getTimestamp("expense_date"));
+                    expense.setCreatedAt(rs.getTimestamp("created_at"));
+                    expenses.add(expense);
+                    System.out.print(expense.toString());
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching expenses by month and year: " + e.getMessage());
+        }
+
+        return expenses;
+    }
+
     
     public List<Expense> getExpensesByCategory(String category) {
         String query = "SELECT * FROM \"Byte-Budgeters\".\"Expense\" WHERE category = ?";

@@ -45,4 +45,7 @@ public class ExpenseService {
     public boolean modifyExpense(Expense expense) {
         return new ExpenseRepository().updateExpense(expense); 
     }
+    public List<Expense> getExpensesByUserIdAndMonthAndYear(int userId, int month, int year){
+    	return new ExpenseRepository().getExpensesByUserIdAndMonthAndYear(userId, month, year);
+    }
 }
