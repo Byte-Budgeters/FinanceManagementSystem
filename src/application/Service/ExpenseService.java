@@ -19,8 +19,8 @@ public class ExpenseService {
 	    public List<Expense> getExpensesByUserId(int userId) {
 	        return new ExpenseRepository().getExpensesByUserId(userId); 
 	    }
-	    public List<Expense> getExpensesByCategory(String category) {
-	        return new ExpenseRepository().getExpensesByCategory(category); 
+	    public List<Expense> getExpensesByCategory(String category, int month, int year) {
+	        return new ExpenseRepository().getExpensesByUserIdCategoryAndMonthYear(category, month, year); 
 	    }
 
     public boolean addExpense(Expense expense) {

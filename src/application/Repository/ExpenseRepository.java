@@ -186,14 +186,22 @@ public class ExpenseRepository {
     }
 
     
-    public List<Expense> getExpensesByCategory(String category) {
-        String query = "SELECT * FROM \"Byte-Budgeters\".\"Expense\" WHERE category = ?";
+    public List<Expense> getExpensesByUserIdCategoryAndMonthYear(String category, int month, int year) {
+        String query = "SELECT * FROM \"Byte-Budgeters\".\"Expense\" " +
+                       "WHERE user_id = ? AND category = ? " +
+                       "AND EXTRACT(MONTH FROM expense_date) = ? " +
+                       "AND EXTRACT(YEAR FROM expense_date) = ? " +
+                       "ORDER BY expense_date DESC";
         List<Expense> expenses = new ArrayList<>();
 
         try (Connection connection = DatabaseService.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
 
-            stmt.setString(1, category);
+            stmt.setInt(1, UserSession.getUserID());
+            stmt.setString(2, category);
+            stmt.setInt(3, month);
+            stmt.setInt(4, year);
+
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     Expense expense = new Expense();
@@ -208,11 +216,12 @@ public class ExpenseRepository {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error fetching expenses by user ID: " + e.getMessage());
+            System.err.println("Error fetching expenses by user ID, category, month, and year: " + e.getMessage());
         }
 
         return expenses;
     }
+
     public ExpenseSummary getMonthlyExpenseSummaryAndAverageForLast3Months(ExpenseSummary summary, int year, int month) {
         String monthlyExpenseSummaryQuery = """
             WITH MonthlyExpenses AS (
