@@ -165,4 +165,31 @@ public class BudgetRepository {
         budget.setCreatedAt(rs.getTimestamp("created_at"));
         return budget;
     }
+    
+    public List<Budget> getBudgetByUserIdAndMonthAndYear(int userId, int month, int year) {
+        String query = "SELECT * FROM \"Byte-Budgeters\".\"Budget\" " +
+                       "WHERE user_id = ? AND EXTRACT(MONTH FROM budget_date) = ? " +
+                       "AND EXTRACT(YEAR FROM budget_date) = ? " +
+                       "ORDER BY budget_date DESC";
+        List<Budget> budgets = new ArrayList<>();
+
+        try (Connection connection = DatabaseService.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setInt(1, userId);
+            stmt.setInt(2, month);
+            stmt.setInt(3, year);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    budgets.add(mapResultSetToBudget(rs));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching budgets by month and year: " + e.getMessage());
+        }
+
+        return budgets;
+    }
+
 }

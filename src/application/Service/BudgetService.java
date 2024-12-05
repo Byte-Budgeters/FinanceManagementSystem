@@ -44,4 +44,7 @@ public class BudgetService {
         }
         return budgetRepository.updateBudget(budget);
     }
+    public List<Budget> getBudgetByUserIdAndMonthAndYear(int userId, int month, int year){
+    	return  budgetRepository.getBudgetByUserIdAndMonthAndYear(userId, month, year);
+    }
 }
