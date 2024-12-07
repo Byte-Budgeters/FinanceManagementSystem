@@ -79,14 +79,27 @@ public class BudgetController {
     
     private void updatePieChartForCategory(Budget budget) {
         spendingChart.getData().clear();
+        
+        double totalBudget = budget.getLimit();
+        double spent = budget.getCurrentSpending();
+        double remaining = totalBudget - spent;
 
-        // Add "Spent" segment
-        PieChart.Data spentSegment = new PieChart.Data("Spent", budget.getCurrentSpending());
+        double spentPercentage = (totalBudget > 0) ? (spent / totalBudget) * 100 : 0;
+        double remainingPercentage = (totalBudget > 0) ? (remaining / totalBudget) * 100 : 0;
 
-        // Add "Remaining" segment
-        PieChart.Data remainingSegment = new PieChart.Data("Remaining", budget.getRemainingBudget());
+     // Create PieChart.Data with values and percentages
+        PieChart.Data spentSegment = new PieChart.Data(
+            String.format("Spent: $%.2f (%.1f%%)", spent, spentPercentage),
+            spent
+        );
+        PieChart.Data remainingSegment = new PieChart.Data(
+            String.format("Remaining: $%.2f (%.1f%%)", remaining, remainingPercentage),
+            remaining
+        );
 
+        // Add data to the pie chart
         spendingChart.getData().addAll(spentSegment, remainingSegment);
+
     }
 
     @FXML
