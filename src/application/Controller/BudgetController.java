@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import java.util.Date;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,9 +45,16 @@ public class BudgetController {
 
         // Load data into the TableView
         budgetTable.setItems(budgetManager.getBudgets());
+        
+        budgetTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                updatePieChartForCategory(newSelection);
+            }
+        });
+
 
         // Populate the category dropdown
-        categoryDropdown.setItems(FXCollections.observableArrayList("Groceries", "Food", "Travel", "Entertainment", "Utilities", "Other"));
+        categoryDropdown.setItems(FXCollections.observableArrayList("Groceries", "Utilities", "Rent", "Commute", "Food", "Entertainment"));
 
         // Update the spending chart
         updateSpendingChart();
@@ -59,6 +65,28 @@ public class BudgetController {
                 limitField.setText(oldText);
             }
         });
+    }
+
+    private void updateSpendingChart() {
+        spendingChart.getData().clear();
+        Map<String, Double> spendingByCategory = new HashMap<>();
+        for (Budget budget : budgetManager.getBudgets()) {
+            spendingByCategory.merge(budget.getBudgetCategory(), budget.getCurrentSpending(), Double::sum);
+        }
+        spendingByCategory.forEach((category, spending) ->
+            spendingChart.getData().add(new PieChart.Data(category, spending)));
+    }
+    
+    private void updatePieChartForCategory(Budget budget) {
+        spendingChart.getData().clear();
+
+        // Add "Spent" segment
+        PieChart.Data spentSegment = new PieChart.Data("Spent", budget.getCurrentSpending());
+
+        // Add "Remaining" segment
+        PieChart.Data remainingSegment = new PieChart.Data("Remaining", budget.getRemainingBudget());
+
+        spendingChart.getData().addAll(spentSegment, remainingSegment);
     }
 
     @FXML
@@ -78,9 +106,6 @@ public class BudgetController {
             return;
         }
 
-        // Add the budget
-        Budget newBudget = new Budget(budgetCategory, limit);
-        newBudget.setBudgetDate(new Date());
         budgetManager.addBudget(budgetCategory, limit);
 
         // Clear fields and update UI
@@ -109,6 +134,8 @@ public class BudgetController {
 
         selectedBudget.setLimit(newLimit);
         budgetManager.modifyBudget(selectedBudget);
+
+        // Refresh table and chart
         budgetTable.refresh();
         updateSpendingChart();
     }
@@ -122,18 +149,10 @@ public class BudgetController {
         }
 
         budgetManager.deleteBudget(selectedBudget);
+
+        // Refresh table and chart
         budgetTable.setItems(budgetManager.getBudgets());
         updateSpendingChart();
-    }
-
-    private void updateSpendingChart() {
-        spendingChart.getData().clear();
-        Map<String, Double> spendingByCategory = new HashMap<>();
-        for (Budget budget : budgetManager.getBudgets()) {
-            spendingByCategory.merge(budget.getBudgetCategory(), budget.getCurrentSpending(), Double::sum);
-        }
-        spendingByCategory.forEach((category, spending) ->
-            spendingChart.getData().add(new PieChart.Data(category, spending)));
     }
 
     private void showError(String message) {
