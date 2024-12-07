@@ -87,11 +87,29 @@ public class DashboardController {
             expenseRepository.getMonthlyExpenseSummaryAndAverageForLast3Months(expenseSummary, year, month);
             
            
+            if ((Double)expenseSummary.getTotalExpenseAmount() == null) {
+            	totalExpensesLabel.setText("Data not Avaliable");
+            } else {
+            	totalExpensesLabel.setText(String.format("%.2f", expenseSummary.getTotalExpenseAmount()));
+            }
+            if ((Double)expenseSummary.getAvgThreeMonthExpense() == null) {
+            	averageExpensesLabel.setText("Data not Avaliable");
+            } else {
+            	averageExpensesLabel.setText(String.format("%.2f", expenseSummary.getAvgThreeMonthExpense()));
+            }
             
-            totalExpensesLabel.setText(String.format("%.2f", expenseSummary.getTotalExpenseAmount()));
-            averageExpensesLabel.setText(String.format("%.2f", expenseSummary.getAvgThreeMonthExpense()));
-            highestExpenseLabel.setText(expenseSummary.getMaxExpenseCategory() + ":" + String.format("%.2f", expenseSummary.getMaxExpenseAmount()));
-            lowestExpenseLabel.setText(expenseSummary.getMinExpenseCategory() + ":" + String.format("%.2f", expenseSummary.getMinExpenseAmount()));
+            if ((Double)expenseSummary.getMaxExpenseAmount() == null) {
+            	highestExpenseLabel.setText("Data not Avaliable");
+            } else {
+            	highestExpenseLabel.setText(String.format("%.2f", expenseSummary.getMaxExpenseAmount()));
+            }
+            if ((Double)expenseSummary.getMinExpenseAmount() == null) {
+            	lowestExpenseLabel.setText("Data not Avaliable");
+            } else {
+            	lowestExpenseLabel.setText(String.format("%.2f", expenseSummary.getMinExpenseAmount()));
+            }
+           // highestExpenseLabel.setText(expenseSummary.getMaxExpenseCategory() + ":" + String.format("%.2f", expenseSummary.getMaxExpenseAmount()));
+            //lowestExpenseLabel.setText(expenseSummary.getMinExpenseCategory() + ":" + String.format("%.2f", expenseSummary.getMinExpenseAmount()));
             
         }
     }

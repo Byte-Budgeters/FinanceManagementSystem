@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="application.Controller.LandingPageController"
+           >
+   
+   <VBox fx:id="startPage" 
+         alignment="CENTER" 
+         maxWidth="800" 
+         maxHeight="600" 
+         spacing="20.0" 
+         >
+      
+      <ScrollPane fx:id="myScrollPane" 
+                  styleClass="custom-scroll-pane" 
+                  fitToWidth="true" 
+                  hbarPolicy="NEVER" 
+                  prefHeight="500.0" 
+                  maxWidth="750"
+                  VBox.vgrow="ALWAYS">
+         <content>
+            <VBox spacing="20.0" maxWidth="700">
+               <children>
+               <VBox alignment="CENTER">
+                  <Label text="Finance Tracker System" textFill="#333333" alignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label text="Get started by learning how to use our application." textFill="#666666" alignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  </VBox>
+                  <VBox  spacing="10.0" maxWidth="700">
+                     <children>
+                        <Label text="Application Overview" textFill="#333333" >
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label wrapText="true" 
+                               text="This application is designed to help users manage their personal finances effortlessly. It allows tracking daily expenses, setting budgets, and monitoring spending habits with clear visualizations. The goal is to provide a simple, intuitive tool to stay on top of financial health and achieve financial goals with ease." 
+                               textFill="#666666" 
+                               alignment="CENTER"
+                               >
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Key Features:" textFill="#333333" alignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label wrapText="true"  text="- Expense Logging: Easily record daily expenses by date, category, and amount." textFill="#666666" >
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label wrapText="true"  text="- Budget Management: Set spending limits for different categories and see if you are approaching or exceeding them." textFill="#666666" alignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label wrapText="true"  text="- Expense Overview: View key metrics like total expenses, average expenses, and highest/lowest expense categories for the selected month." textFill="#666666" alignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label text="How to Use" textFill="#333333">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label wrapText="true"  text="1. Log Expenses: Enter expenses by selecting the category, amount, date, and description. You can also edit or delete them." textFill="#666666" >
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label wrapText="true" text="2. Set Budget: Define current-month spending limits for each category. Automatically see total spending and remaining limit for the chosen category." textFill="#666666" >
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label wrapText="true" text="3. Track Progress: View key metrics such as total monthly expenses, average expenses, and the highest/lowest expense categories to monitor your spending and adjust as needed." textFill="#666666" >
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label wrapText="true" text="3. Manage Profile: View your account overview, including name, email, membership duration, and options to change your password or delete your account." textFill="#666666" >
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+      
+      <HBox alignment="CENTER" spacing="20.0" VBox.vgrow="NEVER">
+         <children>
+            <Button fx:id="loginButton" 
+                    mnemonicParsing="false"  
+                    styleClass="primary-button" 
+                    text="Login" 
+                    />
+            <Button fx:id="signUpButton" 
+                    mnemonicParsing="false"  
+                    styleClass="signUp-button" 
+                    text="Sign Up" 
+                   />
+         </children>
+         <padding>
+            <Insets bottom="20.0" />
+         </padding>
+      </HBox>
+   </VBox>
+</StackPane>
