@@ -25,6 +25,14 @@ public class BudgetManager {
     public void addBudget(String budgetCategory, double limit) {
         Budget newBudget = new Budget(budgetCategory, limit); // Create a new budget
         if (budgetService.addBudget(newBudget)) { // Save to database
+        	double totalSpending = expenseService
+                    .getExpensesByCategory(newBudget.getBudgetCategory(), getCurrentMonth(), getCurrentYear())
+                    .stream()
+                    .mapToDouble(expense -> expense.getExpenseAmount())
+                    .sum();
+
+        	newBudget.setCurrentSpending(totalSpending);
+
             budgets.add(newBudget); // Add to in-memory list
         }
     }
